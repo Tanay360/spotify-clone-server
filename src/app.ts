@@ -1,10 +1,13 @@
 import express from 'express';
 import YoutubeMusicApi from 'youtube-music-api'
 import ytdl from 'ytdl-core';
+import cors from 'cors'
 const app = express();
-const port =  process.env.PORT || 8000;
+const port = process.env.PORT || 8000;
 const api = new YoutubeMusicApi();
 await api.initalize()
+
+app.use(cors());
 
 app.get('/search/:query', async (req, res) => {
     try {
