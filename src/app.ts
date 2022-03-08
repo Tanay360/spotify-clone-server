@@ -16,17 +16,25 @@ app.get('/search/:query', async (req, res) => {
         res.status(200);
         res.json(result)
     } catch (e) {
+        console.error(e);
         res.status(500)
         res.end()
     }
 })
 
 app.get('/download/:id', async (req, res) => {
-    const url = `https://www.youtube.com/watch?v=${req.params.id}`
-    res.header("Content-Disposition", 'attachment;\\  filename="Video.mp4');    
-    ytdl(url, {
-        filter: 'audioonly'
-    }).pipe(res);
+    try {
+        const url = `https://www.youtube.com/watch?v=${req.params.id}`
+        res.header("Content-Disposition", 'attachment;\\  filename="Video.mp4');    
+        ytdl(url, {
+            filter: 'audioonly'
+        }).pipe(res);
+    } catch (e) {
+        console.error(e);
+        res.status(500)
+        res.end()
+    }
+    
 })
 
 app.listen(port, () => {
